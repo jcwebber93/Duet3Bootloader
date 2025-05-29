@@ -22,6 +22,9 @@ constexpr uint8_t BoardTypeAdcChannel = 1;				// the ADC channel that the board 
 // Diagnostic LED
 constexpr unsigned int NumLedPins = 2;
 
+constexpr Pin LedPins_FeatherM4CAN[NumLedPins] = { PortAPin(23), NoPin };
+constexpr bool LedActiveHigh_LedPins_FeatherM4CAN = true;
+
 constexpr Pin LedPins_EXP3HC[NumLedPins] = { PortCPin(10), PortCPin(7) };
 constexpr bool LedActiveHigh_EXP3HC = true;
 
@@ -39,6 +42,9 @@ constexpr bool LedActiveHigh_TOOL1RR = false;
 
 constexpr Pin LedPins_F3PTB[NumLedPins] = { PortAPin(30), PortAPin(31) };
 constexpr bool LedActiveHigh_F3PTB = false;
+
+constexpr Pin CanStandbyPin_FeatherM4CAN_HW = PortBPin(12);
+constexpr Pin CanBoostEnablePin_FeatherM4CAN_HW = PortBPin(13);
 
 constexpr Pin CanResetPin_EXP1HCL_v1 = PortAPin(0);
 constexpr Pin CanResetPin_EXP1HCL_v2 = PortAPin(27);	// same as DRIVER_DIR pin

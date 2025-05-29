@@ -35,6 +35,10 @@ extern "C" void debugPrintf(const char* fmt, ...) __attribute__ ((format (printf
 # define SAME5x		1
 # define SAMC21		0
 # define SAME70		0
+#elif defined(__SAME51J19A__)
+# define SAME5x		1
+# define SAMC21		0
+# define SAME70		0
 #elif defined(__SAMC21G18A__)
 # define SAME5x		0
 # define SAMC21		1

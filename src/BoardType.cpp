@@ -33,8 +33,22 @@ bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useA
 	return true;
 }
 
-# else
 
+# elif defined(FeatherM4CAN)
+
+constexpr const char* BoardTypeNames[] = { "FeatherM4CAN" };
+constexpr unsigned int BoardTypeVersions[] = { 0 };
+constexpr const Pin *LedPinsTables[] = { LedPins_FeatherM4CAN };
+constexpr bool LedActiveHigh[] = { LedActiveHigh_FeatherM4CAN };
+
+bool IdentifyBoard(CanAddress& defaultAddress, bool& useAlternateCanPins)
+{
+	defaultAddress = CanId::FeatherM4CANDefaultAddress;
+	useAlternateCanPins = true;
+	return true;
+}
+
+# else
 #  include <AnalogIn.h>
 
 // Board ID analog pin handling
@@ -217,7 +231,7 @@ bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useA
 
 # endif
 
-#elif SAMC21
+# elif SAMC21
 
 # ifdef SAMMYC21
 
