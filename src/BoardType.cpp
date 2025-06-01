@@ -41,10 +41,13 @@ constexpr unsigned int BoardTypeVersions[] = { 0 };
 constexpr const Pin *LedPinsTables[] = { LedPins_FeatherM4CAN };
 constexpr bool LedActiveHigh[] = { LedActiveHigh_FeatherM4CAN };
 
-bool IdentifyBoard(CanAddress& defaultAddress, bool& useAlternateCanPins)
+bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
 {
 	defaultAddress = CanId::FeatherM4CANDefaultAddress;
 	useAlternateCanPins = true;
+	SetPinMode(ButtonPins[0], INPUT_PULLUP, false);
+	delayMicroseconds(100);
+	doHardwareReset = !digitalRead(ButtonPins[0]);
 	return true;
 }
 

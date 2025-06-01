@@ -23,7 +23,7 @@ constexpr uint8_t BoardTypeAdcChannel = 1;				// the ADC channel that the board 
 constexpr unsigned int NumLedPins = 2;
 
 constexpr Pin LedPins_FeatherM4CAN[NumLedPins] = { PortAPin(23), NoPin };
-constexpr bool LedActiveHigh_LedPins_FeatherM4CAN = true;
+constexpr bool LedActiveHigh_LedPins_FeatherM4CAN = false;
 
 constexpr Pin LedPins_EXP3HC[NumLedPins] = { PortCPin(10), PortCPin(7) };
 constexpr bool LedActiveHigh_EXP3HC = true;
