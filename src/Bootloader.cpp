@@ -296,12 +296,6 @@ void AppMain()
 	{
 		ReportErrorAndRestart("Unknown board", FirmwareFlashErrorCode::unknownBoard);
 	}
-	if (strcmp(GetBoardTypeName(), "FeatherM4CAN") == 0)
-		{
-			SetPinMode(PortBPin(12), OUTPUT_LOW);  // CAN_STBY on PB12
-			SetPinMode(PortBPin(13), OUTPUT_HIGH); // BOOST_EN on PB13
-			delayMicroseconds(100); // Small delay for booster to stabilize if needed
-		}
 
 	for (unsigned int ledNumber = 0; ledNumber < NumLedPins; ++ledNumber)
 	{

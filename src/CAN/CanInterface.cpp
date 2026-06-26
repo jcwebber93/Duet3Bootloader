@@ -83,15 +83,21 @@ void CanInterface::Init(CanAddress defaultBoardAddress, bool doHardwareReset, bo
 	unsigned int whichPort;
 	if (useAlternatePins)
 	{
-		SetPinFunction(PortAPin(23), GpioPinFunction::I);
-		SetPinFunction(PortAPin(22), GpioPinFunction::I);
-		whichPort = 0;											// use CAN0
+		#if defined(FeatherM4CAN)
+			SetPinFunction(PortBPin(14), GpioPinFunction::H);	
+			SetPinFunction(PortBPin(15), GpioPinFunction::H);
+			whichPort = 1;
+		#else
+			SetPinFunction(PortAPin(23), GpioPinFunction::I);	
+			SetPinFunction(PortAPin(22), GpioPinFunction::I);	
+			whichPort = 0;										// Use CAN0
+		#endif
 	}
 	else
 	{
 		SetPinFunction(PortBPin(13), GpioPinFunction::H);
 		SetPinFunction(PortBPin(12), GpioPinFunction::H);
-		whichPort = 1;											// use CAN1
+		whichPort = 1;											// Use CAN1
 	}
 # endif
 #elif SAMC21
@@ -118,7 +124,10 @@ void CanInterface::Init(CanAddress defaultBoardAddress, bool doHardwareReset, bo
 #ifdef SAMMYC21
 	SetPinMode(CanStandbyPin, OUTPUT_LOW);						// take the CAN drivers out of standby
 #endif
-
+#ifdef FeatherM4CAN
+	SetPinMode(CanStandbyPin, OUTPUT_LOW);
+	SetPinMode(CanBoostEnablePin, OUTPUT_HIGH);
+#endif
 #if defined(CAN_IAP)
 	boardAddress = defaultBoardAddress;
 #else

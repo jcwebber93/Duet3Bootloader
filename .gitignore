@@ -48,3 +48,13 @@
 /Duet3_MB6HC-Debug/
 /Duet3_Mini5plus-Debug/
 /FeatherM4CAN/
+.cproject
+/SAMME51/
+/DP3EXB/
+/DP3EXB-Debug/
+.cproject
+.settings/org.eclipse.cdt.core.prefs
+Duet3Bootloader DP3EXB.launch
+Duet3Bootloader FeatherM4CAN.launch
+Duet3Bootloader FeatherM4CAN.launch
+.cproject

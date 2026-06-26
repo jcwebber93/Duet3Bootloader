@@ -35,25 +35,48 @@ bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useA
 
 
 # elif defined(FeatherM4CAN)
+#  include <AnalogIn.h>
 
+// Board ID analog pin handling
+constexpr uint32_t AdcRange = 1u << AnalogIn::AdcBits;
 constexpr const char* BoardTypeNames[] = { "FeatherM4CAN" };
 constexpr unsigned int BoardTypeVersions[] = { 0 };
 constexpr const Pin *LedPinsTables[] = { LedPins_FeatherM4CAN };
 constexpr bool LedActiveHigh[] = { LedActiveHigh_FeatherM4CAN };
+constexpr Pin CanResetPins[] = { PortAPin(17) }; 					// Same as DIR pin
 
 bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
 {
 	defaultAddress = CanId::FeatherM4CANDefaultAddress;
 	useAlternateCanPins = true;
-	SetPinMode(ButtonPins[0], INPUT_PULLUP, false);
+	SetPinMode(CanResetPins[boardTypeIndex], INPUT_PULLUP, false);
 	delayMicroseconds(100);
-	doHardwareReset = !digitalRead(ButtonPins[0]);
+	doHardwareReset = !digitalRead(CanResetPins[boardTypeIndex]);
+	return true;
+}
+
+
+# elif defined(DP3EXB)
+#  include <AnalogIn.h>
+
+// Board ID analog pin handling
+constexpr uint32_t AdcRange = 1u << AnalogIn::AdcBits;
+constexpr const char* BoardTypeNames[] = { "DP3EXB" };
+constexpr unsigned int BoardTypeVersions[] = { 0 };
+constexpr const Pin *LedPinsTables[] = { LedPins_DP3EXB };
+constexpr bool LedActiveHigh[] = { LedActiveHigh_DP3EXB };
+bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
+{
+	defaultAddress = CanId::FeatherM4CANDefaultAddress;
+	useAlternateCanPins = true;
+	doHardwareReset = false;
 	return true;
 }
 
 # else
-#  include <AnalogIn.h>
 
+#  include <AnalogIn.h>
+	
 // Board ID analog pin handling
 constexpr uint32_t AdcRange = 1u << AnalogIn::AdcBits;
 
@@ -170,8 +193,8 @@ enum DeviceId : uint32_t
 {
 	SAME51N_min = 0x61810300 & DeviceIdMask,
 	SAME51N_max = 0x61810301 & DeviceIdMask,
-	SAME51J_min = 0x61810302 & DeviceIdMask,
-	SAME51J_max = 0x61810304 & DeviceIdMask,
+	SAME51J_min = 0x61810502 & DeviceIdMask,
+	SAME51J_max = 0x61810504 & DeviceIdMask,
 	SAME51G_min = 0x61810305 & DeviceIdMask,
 	SAME51G_max = 0x61810306 & DeviceIdMask
 };
@@ -526,7 +549,7 @@ static_assert(ARRAY_SIZE(BoardTypeVersions) == ARRAY_SIZE(BoardTypeNames));
 static_assert(ARRAY_SIZE(LedPinsTables) == ARRAY_SIZE(BoardTypeNames));
 static_assert(ARRAY_SIZE(LedActiveHigh) == ARRAY_SIZE(BoardTypeNames));
 
-#if !defined(CAN_IAP) && !defined(SAMMYC21)
+#if !defined(CAN_IAP) && !defined(SAMMYC21) && !defined(FeatherM4CAN) && !defined(DP3EXB)
 static_assert(ARRAY_SIZE(CanResetPins) == ARRAY_SIZE(BoardTypeNames));
 #endif
 

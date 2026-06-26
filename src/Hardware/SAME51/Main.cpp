@@ -10,10 +10,10 @@ void AppInit() noexcept
 // Return the XOSC frequency in MHz
 unsigned int AppGetXoscFrequency() noexcept
 {
-#if defined(CAN_IAP)
+#if defined(CAN_IAP) || defined(FeatherM4CAN)
 	return 25;			// Duet 3 Mini always uses a 25MHz crystal
 #else
-	return 0;			// EXP3HC may use 16MHz or 25MHz. EXP1HCL uses 25MHz.
+	return 0;			// EXP3HC may use 16MHz or 25MHz. EXP1HCL, DP3EXB uses 25MHz.
 #endif
 }
 
@@ -21,11 +21,12 @@ unsigned int AppGetXoscFrequency() noexcept
 unsigned int AppGetXoscNumber() noexcept
 {
 #if defined(CAN_IAP) || defined(FeatherM4CAN)
-	return 1;			// Duet 3 Mini uses XOSC 1
+	return 1;			// FeatherM4CAN, Duet 3 Mini uses XOSC 1
 #else
 	return 0;			// EXP3HC, EXP1HCL and M23CL use XOSC 0
 #endif
 }
+
 
 #endif
 
