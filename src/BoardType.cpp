@@ -67,7 +67,7 @@ constexpr const Pin *LedPinsTables[] = { LedPins_DP3EXB };
 constexpr bool LedActiveHigh[] = { LedActiveHigh_DP3EXB };
 bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
 {
-	defaultAddress = CanId::FeatherM4CANDefaultAddress;
+	defaultAddress = CanId::Exp1HCLBoardDefaultAddress;
 	useAlternateCanPins = true;
 	doHardwareReset = false;
 	return true;
