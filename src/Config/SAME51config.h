@@ -5,15 +5,15 @@
  *      Author: David
  */
 
-#ifndef SRC_CONFIG_EXPANSION1_V09_H_
-#define SRC_CONFIG_EXPANSION1_V09_H_
+#ifndef SRC_CONFIG_SAME51CONFIG_H_
+#define SRC_CONFIG_SAME51CONFIG_H_
 
 #include "RepRapFirmware.h"
 
 #define DIAG_SERCOM_NUMBER	3							// which SERCOM device we use for debugging output
 
 constexpr size_t NumAddressBits = 4;
-constexpr Pin BoardAddressPins[NumAddressBits] = { PortCPin(11), PortCPin(12), PortCPin(14), PortCPin(15) };
+constexpr Pin BoardAddressPins_EXP3HC[NumAddressBits] = { PortCPin(11), PortCPin(12), PortCPin(14), PortCPin(15) };
 
 Adc * const CommonAdcDevice = ADC0;						// ADC device used for the board type pin
 constexpr Pin BoardTypePin = PortAPin(3);				// Board type pin (not on EXP3HC)
@@ -28,14 +28,13 @@ constexpr bool LedActiveHigh_FeatherM4CAN = true;
 constexpr Pin LedPins_DP3EXB[NumLedPins] = { PortAPin(30), PortAPin(31) };
 constexpr bool LedActiveHigh_DP3EXB = false;
 
+// Standard assignment of LED pins used by most boards
+constexpr Pin LedPins_standard[NumLedPins] =  { PortAPin(30), PortAPin(31) };
+constexpr Pin LedActiveHigh_standard = false;
+
+// Assignment used by boards that don't use the standard assignment
 constexpr Pin LedPins_EXP3HC[NumLedPins] = { PortCPin(10), PortCPin(7) };
 constexpr bool LedActiveHigh_EXP3HC = true;
-
-constexpr Pin LedPins_EXP1HCL[NumLedPins] = { PortAPin(30), PortAPin(31) };
-constexpr bool LedActiveHigh_EXP1HCL = false;
-
-constexpr Pin LedPins_DUET3MINI[NumLedPins] = { PortAPin(30), PortAPin(31) };
-constexpr bool LedActiveHigh_DUET3MINI = false;
 
 constexpr Pin LedPins_M23CL[NumLedPins] = { PortAPin(12), PortAPin(13) };
 constexpr bool LedActiveHigh_M23CL = true;
@@ -54,6 +53,7 @@ constexpr Pin CanResetPin_EXP1HCL_v2 = PortAPin(27);	// same as DRIVER_DIR pin
 constexpr Pin CanResetPin_M23CL = PortAPin(0);
 constexpr Pin CanResetPin_TOOL1RR = PortAPin(10);		// same as DRIVER_DIR pin
 constexpr Pin CanResetPin_F3PTB = PortAPin(10);			// same as DRIVER_DIR pin
+constexpr Pin CanResetPin_TOOLINDX = PortBPin(23);		// same as DRIVER_DIR pin
 
 // Available UART ports
 constexpr IRQn Serial0_IRQn = SERCOM3_0_IRQn;
@@ -65,4 +65,4 @@ const uint32_t NvicPriorityPins = 3;					// priority for GPIO pin interrupts
 const uint32_t NvicPriorityCan = 4;
 const uint32_t NvicPriorityDmac = 5;					// priority for DMA complete interrupts
 
-#endif /* SRC_CONFIG_EXPANSION1_V09_H_ */
+#endif /* SRC_CONFIG_SAME51CONFIG_H_ */
