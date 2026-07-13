@@ -66,10 +66,11 @@ constexpr const char* BoardTypeNames[] = { "DP3EXB" };
 constexpr unsigned int BoardTypeVersions[] = { 0 };
 constexpr const Pin *LedPinsTables[] = { LedPins_DP3EXB };
 constexpr bool LedActiveHigh[] = { LedActiveHigh_DP3EXB };
-bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
+bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, unsigned int& whichCanPort, bool& useLaterCanPins)
 {
 	defaultAddress = CanId::Exp1HCLBoardDefaultAddress;
-	useAlternateCanPins = true;
+	whichCanPort = 0;
+	useLaterCanPins = false;
 	doHardwareReset = false;
 	return true;
 }
