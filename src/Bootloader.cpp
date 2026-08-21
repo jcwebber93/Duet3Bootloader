@@ -278,7 +278,6 @@ void RequestFirmwareBlock(uint32_t fileOffset, uint32_t numBytes, CanMessageBuff
 	msg->fileOffset = fileOffset;
 	msg->lengthRequested = numBytes;
 	buf.dataLength = msg->GetActualDataLength();
-	buf.useBrs = false;			// the bootloader never negotiates bit rate switching, so it must not request it
 	CanInterface::Send(&buf);
 }
 

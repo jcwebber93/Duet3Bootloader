@@ -25,8 +25,13 @@ constexpr unsigned int NumLedPins = 2;
 constexpr Pin LedPins_FeatherM4CAN[NumLedPins] = { PortAPin(23), NoPin };
 constexpr bool LedActiveHigh_FeatherM4CAN = true;
 
-constexpr Pin LedPins_DP3EXB[NumLedPins] = { PortAPin(30), PortAPin(31) };
-constexpr bool LedActiveHigh_DP3EXB = false;
+//constexpr Pin LedPins_DP3EXB[NumLedPins] = { PortAPin(30), PortAPin(31) };
+//constexpr bool LedActiveHigh_DP3EXB = false;
+constexpr Pin CanResetPin_DP3EXB = PortBPin(8);
+
+//constexpr Pin LedPins_SAMME51[NumLedPins] = { PortAPin(30), PortAPin(31) };
+//constexpr bool LedActiveHigh_SAMME51 = false;
+constexpr Pin CanResetPin_SAMME51 = PortBPin(8);
 
 // Standard assignment of LED pins used by most boards
 constexpr Pin LedPins_standard[NumLedPins] =  { PortAPin(30), PortAPin(31) };

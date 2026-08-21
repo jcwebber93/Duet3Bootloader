@@ -46,10 +46,11 @@ constexpr const Pin *LedPinsTables[] = { LedPins_FeatherM4CAN };
 constexpr bool LedActiveHigh[] = { LedActiveHigh_FeatherM4CAN };
 constexpr Pin CanResetPins[] = { PortAPin(17) }; 					// Same as DIR pin
 
-bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useAlternateCanPins)
+bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, unsigned int& whichCanPort, bool& useLaterCanPins)
 {
 	defaultAddress = CanId::FeatherM4CANDefaultAddress;
-	useAlternateCanPins = true;
+	whichCanPort = 1;
+	useLaterCanPins = true;
 	SetPinMode(CanResetPins[boardTypeIndex], INPUT_PULLUP, false);
 	delayMicroseconds(100);
 	doHardwareReset = !digitalRead(CanResetPins[boardTypeIndex]);
@@ -58,20 +59,39 @@ bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, bool& useA
 
 
 # elif defined(DP3EXB)
-#  include <AnalogIn.h>
 
-// Board ID analog pin handling
-constexpr uint32_t AdcRange = 1u << AnalogIn::AdcBits;
 constexpr const char* BoardTypeNames[] = { "DP3EXB" };
 constexpr unsigned int BoardTypeVersions[] = { 0 };
-constexpr const Pin *LedPinsTables[] = { LedPins_DP3EXB };
-constexpr bool LedActiveHigh[] = { LedActiveHigh_DP3EXB };
+constexpr const Pin *LedPinsTables[] = { LedPins_standard };
+constexpr bool LedActiveHigh[] = { LedActiveHigh_standard };
+constexpr Pin CanResetPins[] = { CanResetPin_DP3EXB };
+
 bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, unsigned int& whichCanPort, bool& useLaterCanPins)
 {
-	defaultAddress = CanId::Exp1HCLBoardDefaultAddress;
+	defaultAddress = CanId::DP3EXBDefaultAddress;
 	whichCanPort = 0;
 	useLaterCanPins = false;
-	doHardwareReset = false;
+	SetPinMode(CanResetPins[boardTypeIndex], INPUT_PULLUP, false);
+	delayMicroseconds(100);
+	doHardwareReset = !digitalRead(CanResetPins[boardTypeIndex]);
+	return true;
+}
+
+# elif defined(SAMME51)
+
+constexpr const char* BoardTypeNames[] = { "SAMME51" };
+constexpr unsigned int BoardTypeVersions[] = { 0 };
+constexpr const Pin *LedPinsTables[] = { LedPins_standard };
+constexpr bool LedActiveHigh[] = { LedActiveHigh_standard };
+constexpr Pin CanResetPins[] = { CanResetPin_SAMME51 };
+bool IdentifyBoard(CanAddress& defaultAddress, bool& doHardwareReset, unsigned int& whichCanPort, bool& useLaterCanPins)
+{
+	defaultAddress = CanId::SAMME51DefaultAddress;
+	whichCanPort = 0;
+	useLaterCanPins = false;
+	SetPinMode(CanResetPins[boardTypeIndex], INPUT_PULLUP, false);
+	delayMicroseconds(100);
+	doHardwareReset = !digitalRead(CanResetPins[boardTypeIndex]);
 	return true;
 }
 
@@ -622,7 +642,7 @@ static_assert(ARRAY_SIZE(BoardTypeVersions) == ARRAY_SIZE(BoardTypeNames));
 static_assert(ARRAY_SIZE(LedPinsTables) == ARRAY_SIZE(BoardTypeNames));
 static_assert(ARRAY_SIZE(LedActiveHigh) == ARRAY_SIZE(BoardTypeNames));
 
-#if !defined(CAN_IAP) && !defined(SAMMYC21) && !defined(FeatherM4CAN) && !defined(DP3EXB)
+#if !defined(CAN_IAP) && !defined(SAMMYC21) && !defined(FeatherM4CAN) && !defined(SAMME51)
 static_assert(ARRAY_SIZE(CanResetPins) == ARRAY_SIZE(BoardTypeNames));
 #endif
 
